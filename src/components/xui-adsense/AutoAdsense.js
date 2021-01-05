@@ -7,6 +7,7 @@ const AutoAdsense = {
     s.type = 'text/javascript'
     s.src = constant.ADS_SCRIPT
     s.onload = () => {
+      // eslint-disable-next-line no-undef
       (adsbygoogle = window.adsbygoogle || []).push({
         google_ad_client: adClient,
         enable_page_level_ads: true

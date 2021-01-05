@@ -15,10 +15,11 @@
 </template>
 
 <script>
-import 'video.js/dist/video-js.css'
+import _ from 'lodash'
 import _videojs from 'video.js'
-const videojs = window.videojs || _videojs
+import generated from '@thelak/videojs-resolution-switcher-v7'
 
+const videojs = generated(window.videojs || _videojs)
 export default {
   name: 'videoplayer',
   props: {
@@ -68,7 +69,13 @@ export default {
   data () {
     return {
       player: null,
-      reseted: true
+      reseted: true,
+      optionsLoaded: false
+    }
+  },
+  computed: {
+    currentOptions () {
+      return this.options
     }
   },
   methods: {
@@ -115,12 +122,12 @@ export default {
           'waiting',
           'playing',
           'ended',
-          'error'
+          'error',
+          'timeupdate'
         ]
         const events = DEFAULT_EVENTS.concat(self.events).concat(
           self.globalEvents
         )
-
         // watch events
         const onEdEvents = {}
         for (let i = 0; i < events.length; i++) {
@@ -138,7 +145,7 @@ export default {
         }
         // player readied
         self.$emit('ready', this)
-      })
+      })// .videoJsResolutionSwitcher()
     },
     dispose (callback) {
       if (this.player && this.player.dispose) {
@@ -157,17 +164,31 @@ export default {
           })
         })
       }
+    },
+    checkChanges (object, base) {
+      const changes = (object, base) => {
+        return _.transform(object, (result, value, key) => {
+          if (!_.isEqual(value, base[key])) {
+            result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value
+          }
+        })
+      }
+      return changes(object, base)
     }
   },
   watch: {
     options: {
       deep: true,
-      handler (options, oldOptions) {
-        this.dispose(() => {
-          if (options && options.sources && options.sources.length) {
-            this.initialize()
-          }
-        })
+      handler (options) {
+        // if (Object.keys(zhopa).length)
+        if (!this.optionsLoaded) {
+          this.dispose(() => {
+            if (options && options.sources && options.sources.length) {
+              this.initialize()
+              this.optionsLoaded = true
+            }
+          })
+        }
       }
     }
   },
@@ -185,6 +206,7 @@ export default {
 
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+@import '~video.js/dist/video-js.css';
+@import '~@thelak/videojs-resolution-switcher-v7/lib/videojs-resolution-switcher-v7.css';
 </style>

@@ -1,10 +1,10 @@
 {
-  "name": "vue-videojs7",
-  "version": "0.1.3",
+  "name": "@thelak/vue-videojs7",
+  "version": "0.1.4",
   "description": "A vue video player plugin using video.js 7.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alterhu2020/vue-videojs7.git"
+    "url": "git+https://github.com/thelak/vue-videojs7.git"
   },
   "keywords": [
     "vue",
@@ -15,11 +15,15 @@
     "m3u8"
   ],
   "author": "Walter Hu",
+  "contributors": [
+    "thelak",
+    "alterhu2020"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alterhu2020/vue-videojs7/issues"
+    "url": "https://github.com/thelak/vue-videojs7/issues"
   },
-  "homepage": "https://github.com/alterhu2020/vue-videojs7#readme",
+  "homepage": "https://github.com/thelak/vue-videojs7#readme",
   "main": "index.js",
   "scripts": {
     "serve": "vue-cli-service serve --copy",
@@ -28,12 +32,14 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "lodash": "^4.17.20",
+    "@thelak/videojs-resolution-switcher-v7": "^1.2.0",
     "video.js": "^7.2.3",
     "vue": "^2.5.17",
+    "vue-ribbon": "^1.0.1",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
     "vue-script2": "^2.1.0",
-    "vue-ribbon": "^1.0.1"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",
